@@ -3,11 +3,10 @@ import { useState } from 'react';
 
 import { SearchForm } from '../../components/Search/SearchForm';
 import { SearchResults } from '../../components/Search/SearchResults';
+import { SearchWrapper } from '../../components/Search/SearchWrapper';
 import { useSearchBuddiesLazyQuery } from '../../graphql';
 
-import styles from './Search.module.scss';
-
-const MIN_QUERY_LENGTH = 2;
+const SEARCH_MIN_QUERY_LENGTH = 2;
 const SEARCH_TIMEOUT = 20;
 const SEARCH_BUDDIES_LIMIT = 5;
 
@@ -31,7 +30,7 @@ export const Search: FC<{
   useEffect(() => {
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(async () => {
-      if (searchValue.length < MIN_QUERY_LENGTH) {
+      if (searchValue.length < SEARCH_MIN_QUERY_LENGTH) {
         return;
       }
       try {
@@ -49,9 +48,11 @@ export const Search: FC<{
   }, [cachedData, onSearchResults]);
 
   return (
-    <div className={styles.root}>
+    <SearchWrapper>
       <SearchForm value={searchValue} onChange={(v) => setSearchValue(v)} />
-      <SearchResults buddies={cachedData?.buddies} />
-    </div>
+      {cachedData?.buddies?.length > 0 && (
+        <SearchResults buddies={cachedData.buddies} />
+      )}
+    </SearchWrapper>
   );
 };
