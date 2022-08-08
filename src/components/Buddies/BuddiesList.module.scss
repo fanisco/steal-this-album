@@ -1,3 +1,11 @@
+.root {
+  transition: opacity ease-in 0.2s;
+
+  &_faded {
+    opacity: 0.32;
+  }
+}
+
 .buddyCell {
   margin-bottom: 2rem;
 }

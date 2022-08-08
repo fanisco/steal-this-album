@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import { useCallback, useState } from 'react';
 
 import { BuddiesList } from '../src/components/Buddies/BuddiesList';
 import { Search } from '../src/containers';
@@ -14,11 +15,13 @@ const Home: NextPage = () => {
   const { data } = useGetBuddiesQuery({
     variables: { limit: FRESH_BUDDIES_LIMIT },
   });
+  const [isSearching, setIsSearching] = useState(false);
+  const onSearchResults = useCallback((is: boolean) => setIsSearching(is), []);
 
   return (
     <div>
-      <Search />
-      <BuddiesList buddies={data?.buddies} />
+      <Search onSearchResults={onSearchResults} />
+      <BuddiesList buddies={data.buddies} fade={isSearching} />
     </div>
   );
 };

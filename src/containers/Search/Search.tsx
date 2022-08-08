@@ -11,7 +11,9 @@ const MIN_QUERY_LENGTH = 2;
 const SEARCH_TIMEOUT = 20;
 const SEARCH_BUDDIES_LIMIT = 5;
 
-export const Search: FC = () => {
+export const Search: FC<{
+  onSearchResults?: (hasResults: boolean) => void;
+}> = ({ onSearchResults }) => {
   const debounceRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
   const [getBuddies, { data, previousData, loading }] =
@@ -41,6 +43,10 @@ export const Search: FC = () => {
       }
     }, SEARCH_TIMEOUT);
   }, [searchValue, getBuddies]);
+
+  useEffect(() => {
+    onSearchResults(Boolean(cachedData));
+  }, [cachedData, onSearchResults]);
 
   return (
     <div className={styles.root}>
