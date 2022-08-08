@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { useCallback, useState } from 'react';
 
-import { BuddiesList } from '../src/components/Buddies/BuddiesList';
+import { IndexBuddies } from '../src/components/Buddies/IndexBuddies';
 import { Search } from '../src/containers';
 import {
   GetBuddiesDocument,
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Search onSearchResults={onSearchResults} />
-      <BuddiesList buddies={data.buddies} fade={isSearching} />
+      <IndexBuddies buddies={data.buddies} fade={isSearching} />
     </div>
   );
 };

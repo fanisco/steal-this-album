@@ -1,7 +1,22 @@
+.list {
+  pointer-events: none;
+}
+
+.buddyWrapper {
+  margin-bottom: 2rem;
+}
+
 .buddy {
   cursor: pointer;
   text-decoration: none;
-  transition: opacity ease-in 0.2s;
+  transition: opacity 0.2s ease-in 0.1s;
+  pointer-events: auto;
+  will-change: opacity;
+}
+
+.list:hover .buddy {
+  opacity: 0.32;
+  transition-delay: 0s;
 
   &:hover {
     opacity: 1;
@@ -26,9 +41,10 @@
   font-weight: bold;
   text-align: center;
   color: rgba(10, 9, 18, 0.64);
-  transition: color ease-in 0.2s;
+  transition: color 0.2s ease-in, transform 0.2s ease-in;
 }
 
 .buddy:hover .name {
   color: #0a0912;
+  transform: translateY(0.5rem);
 }
