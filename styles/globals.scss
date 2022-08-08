@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import './variables.scss';
+
 *,
 *:after,
 *:before {
@@ -16,11 +19,19 @@ body,
 }
 
 html {
+  font-family: $font-family;
   font-size: 16px;
+  color: $color-text;
 }
 
 img {
   width: auto;
   max-width: 100%;
   height: auto !important;
+}
+
+input,
+button,
+textarea {
+  font-family: $font-family;
 }

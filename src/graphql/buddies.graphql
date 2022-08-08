@@ -1,0 +1,23 @@
+query GetBuddies($limit: Int) {
+  buddies(first: $limit) {
+    id
+    name
+    image
+  }
+}
+
+query SearchBuddies($name: String, $limit: Int) {
+  buddies(where: { name_contains: $name }, first: $limit) {
+    id
+    name
+    image
+  }
+}
+
+query GetBuddy($where: BuddyWhereUniqueInput!) {
+  buddy(where: $where) {
+    id
+    name
+    image
+  }
+}

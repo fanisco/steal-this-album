@@ -1,14 +1,14 @@
-schema: http://localhost:3001/graphql
-documents: './src/*.graphql'
+schema: https://eu1.prisma.sh/nevena-djaja/mocks/dev
+documents: './src/graphql/*.graphql'
 generates:
-  ./src/__generated__/types.ts:
+  ./src/graphql/__generated__/types.ts:
     - typescript
-  ./src:
+  ./src/graphql:
     preset: near-operation-file
     presetConfig:
       folder: __generated__
       extension: .tsx
-      baseTypesPath: __generated__/types.ts
+      baseTypesPath: ./__generated__/types.ts
     plugins:
       - typescript-operations
       - typescript-react-apollo

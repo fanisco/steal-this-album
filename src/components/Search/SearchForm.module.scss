@@ -1,0 +1,75 @@
+@import '../../../styles/variables.scss';
+
+$common-height: 8rem;
+$input-font-size: $common-height;
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  height: $common-height;
+
+  &_twoRows {
+    height: $common-height * 2;
+  }
+}
+
+.input {
+  width: 100%;
+  height: $common-height + 1.5rem;
+  padding: 0;
+  border: 0 none;
+  font-size: $input-font-size;
+  font-weight: bold;
+  line-height: 1;
+  background-color: transparent;
+  resize: none;
+  overflow: hidden;
+
+  &:focus {
+    outline: 0 none;
+  }
+
+  &::placeholder {
+    color: $color-text;
+    transition: color ease-in 0.2s;
+  }
+
+  &:hover::placeholder {
+    color: $color-transparent;
+  }
+}
+
+.form_twoRows .input {
+  height: ($common-height + 1.5rem) * 2;
+}
+
+.zoomWrapper,
+.closeWrapper {
+  height: $common-height;
+  justify-content: center;
+}
+
+.zoom {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  transition: opacity ease-in 0.2s;
+
+  &_disabled {
+    opacity: 0.32;
+  }
+}
+
+.close {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  opacity: 0;
+  transition: opacity ease-in 0.2s;
+  cursor: pointer;
+}
+
+.root_hasValue .close {
+  opacity: 0.35;
+}
