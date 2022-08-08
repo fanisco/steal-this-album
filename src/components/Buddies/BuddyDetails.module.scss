@@ -1,12 +1,29 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/media.scss';
+
 .image {
   position: relative;
+  margin-bottom: 3rem;
   padding-bottom: 100%;
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .heading {
-  margin-bottom: 4.5rem;
-  font-size: 8rem;
+  margin-bottom: 1.5rem;
+  font-size: 3rem;
   line-height: 1;
+  text-align: center;
+  word-break: break-all;
+
+  @include media-query('md') {
+    margin-bottom: 2.5rem;
+    font-size: 5rem;
+    text-align: left;
+  }
+  @include media-query('lg') {
+    margin-bottom: 4.5rem;
+    font-size: 8rem;
+    text-align: left;
+  }
 }

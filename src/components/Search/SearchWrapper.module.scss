@@ -1,4 +1,14 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/media.scss';
+
 .root {
   position: relative;
-  height: 24.25rem;
+  height: 12rem;
+
+  @include media-query('md') {
+    height: 18rem;
+  }
+  @include media-query('lg') {
+    height: 24.25rem;
+  }
 }

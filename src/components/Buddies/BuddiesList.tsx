@@ -10,7 +10,13 @@ export const BuddiesList: FC<{ buddies?: BuddyModel[] }> = ({ buddies }) => {
   return (
     <Row className={styles.list}>
       {buddies?.map((buddy) => (
-        <Col key={buddy.id} size={2} className={styles.buddyWrapper}>
+        <Col
+          key={buddy.id}
+          xs={2}
+          md={2}
+          lg={2}
+          className={styles.buddyWrapper}
+        >
           <Buddy {...buddy} />
         </Col>
       ))}

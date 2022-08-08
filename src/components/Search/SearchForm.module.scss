@@ -1,25 +1,42 @@
 @import '../../../styles/variables.scss';
+@import '../../../styles/media.scss';
 
-$common-height: 8rem;
-$input-font-size: $common-height;
+$height-xs: 3rem;
+$height-md: 5rem;
+$height-lg: 8rem;
+
+.root {
+  flex-wrap: nowrap;
+}
 
 .form {
   position: relative;
   display: flex;
   align-items: flex-start;
-  height: $common-height;
+  height: $height-xs;
 
   &_twoRows {
-    height: $common-height * 2;
+    height: $height-xs * 2;
+  }
+
+  @include media-query('md') {
+    &_twoRows {
+      height: $height-md * 2;
+    }
+  }
+  @include media-query('lg') {
+    &_twoRows {
+      height: $height-lg * 2;
+    }
   }
 }
 
 .input {
   width: 100%;
-  height: $common-height + 1.5rem;
+  height: $height-xs + 0.5rem;
   padding: 0;
   border: 0 none;
-  font-size: $input-font-size;
+  font-size: $height-xs;
   font-weight: bold;
   line-height: 1;
   background-color: transparent;
@@ -38,16 +55,39 @@ $input-font-size: $common-height;
   &:hover::placeholder {
     color: $color-transparent;
   }
+
+  @include media-query('md') {
+    height: $height-md + 0.75rem;
+    font-size: $height-md;
+  }
+  @include media-query('lg') {
+    height: $height-lg + 1.5rem;
+    font-size: $height-lg;
+  }
 }
 
 .form_twoRows .input {
-  height: ($common-height + 1.5rem) * 2;
+  height: ($height-xs + 0.5rem) * 2;
+
+  @include media-query('md') {
+    height: ($height-md + 0.75rem) * 2;;
+  }
+  @include media-query('lg') {
+    height: ($height-lg + 1.5rem) * 2;;
+  }
 }
 
 .zoomWrapper,
 .closeWrapper {
-  height: $common-height;
+  height: $height-xs;
   justify-content: center;
+
+  @include media-query('md') {
+    height: $height-md;
+  }
+  @include media-query('lg') {
+    height: $height-lg;
+  }
 }
 
 .zoom {

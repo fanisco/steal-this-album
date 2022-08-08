@@ -1,6 +1,23 @@
 @import '../../../styles/variables.scss';
 @import '../../../styles/media.scss';
 
+.container {
+  margin: 0 auto;
+  min-width: 20rem;
+
+  @each $size, $count in $grid-columns {
+    $width: map_get($grid-container-width, $size);
+    $margin: map_get($grid-margin, $size);
+
+    @include media-query($size) {
+      width: 100%;
+      max-width: $width;
+      padding-left: $margin;
+      padding-right: $margin;
+    }
+  }
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -30,18 +47,17 @@
 
   @each $size, $count in $grid-columns {
     $gutter: map_get($grid-gutter, $size);
-    $width: map_get($grid-column-width, $size);
-
-    padding-left: $gutter / 2;
-    padding-right: $gutter / 2;
 
     @include media-query($size) {
+      padding-left: $gutter / 2;
+      padding-right: $gutter / 2;
+
       @for $n from 1 through $count {
-        &_#{$n} {
-          width: #{$n * ($width + $gutter)};
+        &_#{$size}_#{$n} {
+          width: #{$n / $count * 100}#{'%'};
         }
-        &_o#{$n} {
-          margin-left: #{$n * ($width + $gutter)};
+        &_#{$size}_o#{$n} {
+          margin-left: #{$n / $count * 100}#{'%'};
         }
       }
     }

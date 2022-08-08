@@ -8,27 +8,27 @@ $color-accent: #bc40c7;
 
 // Responsiveness
 $breakpoints: (
-  desktop: 840px,
-  tablet: 600px,
-  phone: 0px,
+  lg: 1440px,
+  md: 768px,
+  xs: 0,
+) !default;
+$grid-container-width: (
+  lg: 1440px,
+  md: 768px,
+  xs: 100%,
 ) !default;
 $grid-columns: (
-  desktop: 12,
-  tablet: 8,
-  phone: 4,
+  lg: 12,
+  md: 8,
+  xs: 4,
 ) !default;
 $grid-margin: (
-  desktop: 72px,
-  tablet: 72px,
-  phone: 72px,
+  lg: 4.5rem,
+  md: 1.5rem,
+  xs: 1.5rem,
 ) !default;
 $grid-gutter: (
-  desktop: 56px,
-  tablet: 56px,
-  phone: 56px,
-) !default;
-$grid-column-width: (
-  desktop: 56px,
-  tablet: 56px,
-  phone: 56px,
+  lg: 3.5rem,
+  md: 1rem,
+  xs: 1rem,
 ) !default;

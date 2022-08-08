@@ -10,7 +10,7 @@ export const SearchResults: FC<{ buddies?: BuddyModel[] }> = ({ buddies }) => {
   return (
     <div className={styles.root}>
       <Row>
-        <Col size={10} offset={1}>
+        <Col xs={4} md={7} lg={10} mdOffset={1} lgOffset={1}>
           <BuddiesList buddies={buddies} />
         </Col>
       </Row>

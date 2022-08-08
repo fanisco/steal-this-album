@@ -1,12 +1,17 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/media.scss';
+
+$header-height: 5rem;
+$footer-height: 15rem;
+
 .container {
-  padding-left: 4.5rem;
-  padding-right: 4.5rem;
+  height: 100%;
 }
 
 .header {
   display: flex;
   align-items: center;
-  height: 5rem;
+  height: $header-height;
 
   &__logo {
     width: 3rem;
@@ -21,14 +26,25 @@
 }
 
 .main {
-  margin-top: 12.25rem;
+  min-height: 100%;
+  margin-top: -$header-height;
+  margin-bottom: -$footer-height;
+  padding-top: $header-height + 6.125rem; // Inner gap
+  padding-bottom: $footer-height;
+
+  @include media-query('md') {
+    padding-top: $header-height + 9rem; // Inner gap
+  }
+  @include media-query('lg') {
+    padding-top: $header-height + 12.25rem; // Inner gap
+  }
 }
 
 .footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 15rem;
+  height: $footer-height;
 
   &__madeWith {
     font-size: 0.75rem;

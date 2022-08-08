@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { BuddyModel } from '../../graphql';
@@ -9,13 +10,9 @@ export const Buddy: FC<BuddyModel> = ({ id, name, image }) => {
   return (
     <Link href={`/details/${id}/`}>
       <a id={`buddy-${id}`} className={styles.buddy}>
-        <img
-          className={styles.image}
-          src={image}
-          alt={name}
-          width="336"
-          height="336"
-        />
+        <div className={styles.image}>
+          <Image src={image} alt={name} layout="fill" />
+        </div>
         <h5 className={styles.name}>{name}</h5>
       </a>
     </Link>

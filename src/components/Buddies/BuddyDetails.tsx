@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 
 import { BuddyModel } from '../../graphql';
@@ -7,18 +7,25 @@ import { Col, Row } from '../Grid/Grid';
 
 import styles from './BuddyDetails.module.scss';
 
-export const BuddyDetails: FC<BuddyModel> = ({ id, name, image }) => {
+export const BuddyDetails: FC<BuddyModel> = ({ name, image }) => {
   return (
     <Row>
-      <Col size={2}>
+      <Col xs={4} md={2} lg={2}>
         <div className={styles.image}>
-          <Image src={image} layout="fill" />
+          <Image src={image} alt={name} layout="fill" />
         </div>
       </Col>
-      <Col size={10}>
-        <h1 className={styles.heading}>{name}</h1>
+      <Col xs={4} md={6} lg={10}>
+        <h1 className={styles.heading}>
+          {name.split(' ').map((part) => (
+            <React.Fragment key={part}>
+              {part}
+              <br />
+            </React.Fragment>
+          ))}
+        </h1>
       </Col>
-      <Col size={3} offset={2}>
+      <Col xs={4} md={4} lg={3} mdOffset={2} lgOffset={2}>
         <Button>Add buddy</Button>
       </Col>
     </Row>

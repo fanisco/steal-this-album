@@ -5,12 +5,13 @@ import Link from 'next/link';
 import Logo from '../../../public/icons/Logo.svg';
 import User from '../../../public/icons/User.svg';
 import Love from '../../../public/icons/Love.svg';
+import { Container } from '../Grid/Grid';
 
 import styles from './Layout.module.scss';
 
 export const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className={styles.container}>
+    <Container className={styles.container}>
       <header className={styles.header}>
         <div className={styles.header__logo}>
           <Link href="/">
@@ -32,6 +33,6 @@ export const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
         <span className={styles.footer__madeWith}>Made with</span>
         <Image className={styles.footer__heart} {...Love} />
       </footer>
-    </div>
+    </Container>
   );
 };

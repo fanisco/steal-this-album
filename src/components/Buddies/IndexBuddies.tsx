@@ -14,7 +14,7 @@ export const IndexBuddies: FC<{ buddies?: BuddyModel[]; fade?: boolean }> = ({
 }) => {
   return (
     <Row className={clsx(styles.root, fade && styles.root_faded)}>
-      <Col size={10} offset={1}>
+      <Col xs={4} md={7} lg={10} mdOffset={1} lgOffset={1}>
         <H1>Fresh cryptobuddies</H1>
         <BuddiesList buddies={buddies} />
       </Col>
