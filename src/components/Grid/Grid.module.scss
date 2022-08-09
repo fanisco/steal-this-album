@@ -47,17 +47,27 @@
 
   @each $size, $count in $grid-columns {
     $gutter: map_get($grid-gutter, $size);
+    $width: map_get($grid-column-width, $size);
 
     @include media-query($size) {
       padding-left: $gutter / 2;
       padding-right: $gutter / 2;
 
       @for $n from 1 through $count {
-        &_#{$size}_#{$n} {
-          width: #{$n / $count * 100}#{'%'};
-        }
-        &_#{$size}_o#{$n} {
-          margin-left: #{$n / $count * 100}#{'%'};
+        @if $size != 'xs' {
+          &_#{$size}_#{$n} {
+            width: #{$n * ($width + $gutter)};
+          }
+          &_#{$size}_o#{$n} {
+            margin-left: #{$n * ($width + $gutter)};
+          }
+        } @else {
+          &_#{$size}_#{$n} {
+            width: #{$n / $count * 100}#{'%'};
+          }
+          &_#{$size}_o#{$n} {
+            margin-left: #{$n / $count * 100}#{'%'};
+          }
         }
       }
     }
