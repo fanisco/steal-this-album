@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { BuddyModel } from '../../graphql';
-import { BuddiesList } from '../Buddies/BuddiesList';
+import { Buddy } from '../Buddies/Buddy';
 import { Col, Row } from '../Grid/Grid';
 
 import styles from './SearchResults.module.scss';
@@ -11,7 +11,29 @@ export const SearchResults: FC<{ buddies?: BuddyModel[] }> = ({ buddies }) => {
     <div className={styles.root}>
       <Row>
         <Col xs={4} md={7} lg={10} mdOffset={1} lgOffset={1}>
-          <BuddiesList buddies={buddies} budyClassName={styles.result} />
+          <Row className={styles.list}>
+            {buddies?.map((buddy, i) => (
+              <Col
+                key={buddy.id}
+                xs={2}
+                md={2}
+                lg={2}
+                className={styles.buddyWrapper}
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0, translateY: 140 },
+                  visible: {
+                    opacity: 1,
+                    translateY: 0,
+                    transition: { delay: i * 0.05, duration: 0.3 },
+                  },
+                }}
+              >
+                <Buddy {...buddy} />
+              </Col>
+            ))}
+          </Row>
         </Col>
       </Row>
     </div>

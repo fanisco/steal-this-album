@@ -8,7 +8,7 @@ import styles from './Buddy.module.scss';
 
 export const Buddy: FC<BuddyModel> = ({ id, name, image }) => {
   return (
-    <Link href={`/details/${id}/`}>
+    <Link href={`/details/${id}/`} scroll={false}>
       <a id={`buddy-${id}`} className={styles.buddy}>
         <div className={styles.image}>
           <Image src={image} alt={name} layout="fill" />

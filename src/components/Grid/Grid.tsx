@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import clsx from 'clsx';
+import { motion, AnimationProps } from 'framer-motion';
 
 import type {
   ColumnCountLg,
@@ -100,7 +101,12 @@ interface AlignProps {
 }
 
 export const Col: FC<
-  ChildrenProps & ClassnameProps & SizeProps & OffsetProps & AlignProps
+  ChildrenProps &
+    ClassnameProps &
+    SizeProps &
+    OffsetProps &
+    AlignProps &
+    AnimationProps
 > = ({
   xs,
   md,
@@ -111,9 +117,11 @@ export const Col: FC<
   align,
   className,
   children,
+  ...rest
 }) => {
   return (
-    <div
+    <motion.div
+      {...rest}
       className={clsx(
         className,
         styles.col,
@@ -127,14 +135,19 @@ export const Col: FC<
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
-export const Row: FC<ChildrenProps & ClassnameProps> = ({
+export const Row: FC<ChildrenProps & ClassnameProps & AnimationProps> = ({
   className,
   children,
-}) => <div className={clsx(className, styles.row)}>{children}</div>;
+  ...rest
+}) => (
+  <div {...rest} className={clsx(className, styles.row)}>
+    {children}
+  </div>
+);
 
 export const Container: FC<ChildrenProps & ClassnameProps> = ({
   className,

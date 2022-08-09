@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { useCallback, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { IndexBuddies } from '../src/components/Buddies/IndexBuddies';
 import { Search } from '../src/containers';
@@ -19,10 +20,10 @@ const Home: NextPage = () => {
   const onSearchResults = useCallback((is: boolean) => setIsSearching(is), []);
 
   return (
-    <div>
+    <motion.div exit={{ opacity: 0 }} transition={{ duration: 0.2, delay: 0 }}>
       <Search onSearchResults={onSearchResults} />
       <IndexBuddies buddies={data.buddies} fade={isSearching} />
-    </div>
+    </motion.div>
   );
 };
 

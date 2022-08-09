@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 
 import { BuddyModel } from '../../graphql';
@@ -9,17 +8,16 @@ import styles from './Buddy.module.scss';
 
 export const BuddiesList: FC<{
   buddies?: BuddyModel[];
-  budyClassName?: string;
-}> = ({ buddies, budyClassName }) => {
+}> = ({ buddies }) => {
   return (
     <Row className={styles.list}>
-      {buddies?.map((buddy) => (
+      {buddies?.map((buddy, i) => (
         <Col
           key={buddy.id}
           xs={2}
           md={2}
           lg={2}
-          className={clsx(styles.buddyWrapper, budyClassName)}
+          className={styles.buddyWrapper}
         >
           <Buddy {...buddy} />
         </Col>
