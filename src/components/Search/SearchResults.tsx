@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { memo } from 'react';
 
 import { BuddyModel } from '../../graphql';
 import { Buddy } from '../Buddies/Buddy';
@@ -6,7 +6,28 @@ import { Col, Row } from '../Grid/Grid';
 
 import styles from './SearchResults.module.scss';
 
-export const SearchResults: FC<{ buddies?: BuddyModel[] }> = ({ buddies }) => {
+interface SearchResultsProps {
+  buddies?: BuddyModel[];
+}
+
+const propsAreEqual = (
+  prevProps: SearchResultsProps,
+  nextProps: SearchResultsProps
+) => {
+  if (prevProps.buddies && nextProps.buddies) {
+    if (prevProps.buddies.length !== nextProps.buddies.length) {
+      return false;
+    }
+    for (let i = 0; i < prevProps.buddies.length; i++) {
+      if (prevProps.buddies[i].id !== nextProps.buddies[i].id) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+export const SearchResults = memo<SearchResultsProps>(({ buddies }) => {
   return (
     <div className={styles.root}>
       <Row>
@@ -38,4 +59,4 @@ export const SearchResults: FC<{ buddies?: BuddyModel[] }> = ({ buddies }) => {
       </Row>
     </div>
   );
-};
+}, propsAreEqual);

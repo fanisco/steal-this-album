@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { memo } from 'react';
 
 import { BuddyModel } from '../../graphql';
 import { Col, Row } from '../Grid/Grid';
@@ -6,12 +6,12 @@ import { Col, Row } from '../Grid/Grid';
 import { Buddy } from './Buddy';
 import styles from './Buddy.module.scss';
 
-export const BuddiesList: FC<{
+export const BuddiesList = memo<{
   buddies?: BuddyModel[];
-}> = ({ buddies }) => {
+}>(({ buddies }) => {
   return (
     <Row className={styles.list}>
-      {buddies?.map((buddy, i) => (
+      {buddies?.map((buddy) => (
         <Col
           key={buddy.id}
           xs={2}
@@ -24,4 +24,4 @@ export const BuddiesList: FC<{
       ))}
     </Row>
   );
-};
+});
