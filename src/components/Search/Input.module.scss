@@ -1,0 +1,90 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/media.scss';
+@import './common.scss';
+
+.root {
+  position: relative;
+  width: 100%;
+  height: $height-xs + 0.5rem;
+  padding: 0;
+  border: 0 none;
+  font-size: $height-xs;
+  font-weight: bold;
+  line-height: 1;
+  background-color: transparent;
+  resize: none;
+  cursor: text;
+
+  @include media-query('md') {
+    height: $height-md + 0.75rem;
+    font-size: $height-md;
+  }
+  @include media-query('lg') {
+    height: $height-lg + 1.5rem;
+    font-size: $height-lg;
+  }
+}
+
+.editable {
+  position: relative;
+  height: 100%;
+  caret-color: transparent;
+
+  &:focus {
+    outline: 0 none;
+  }
+}
+
+.caret {
+  $position-timing-function: cubic-bezier(0.465, 0.215, 0.415, 1.115);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  display: none;
+  height: $height-xs;
+  background-color: #1e252c;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out, top 0.15s $position-timing-function,
+    left 0.2s $position-timing-function;
+  animation: 0.7s cursor-blinking step-end infinite;
+
+  @include media-query('md') {
+    height: $height-md;
+  }
+  @include media-query('lg') {
+    height: $height-lg;
+  }
+}
+
+.editable:focus + .caret {
+  display: block;
+}
+
+@keyframes cursor-blinking {
+  from,
+  to {
+    opacity: 0.32;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  color: $color-text;
+  transition: color ease-in 0.2s, opacity ease-in 0.2s;
+
+  &_hidden {
+    opacity: 0;
+  }
+}
+
+.editable:hover ~ .placeholder {
+  color: $color-transparent;
+}

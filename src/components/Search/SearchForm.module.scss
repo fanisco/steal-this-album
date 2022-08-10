@@ -1,9 +1,6 @@
 @import '../../../styles/variables.scss';
 @import '../../../styles/media.scss';
-
-$height-xs: 3rem;
-$height-md: 5rem;
-$height-lg: 8rem;
+@import './common.scss';
 
 .root {
   flex-wrap: nowrap;
@@ -31,49 +28,14 @@ $height-lg: 8rem;
   }
 }
 
-.input {
-  width: 100%;
-  height: $height-xs + 0.5rem;
-  padding: 0;
-  border: 0 none;
-  font-size: $height-xs;
-  font-weight: bold;
-  line-height: 1;
-  background-color: transparent;
-  resize: none;
-  overflow: hidden;
-
-  &:focus {
-    outline: 0 none;
-  }
-
-  &::placeholder {
-    color: $color-text;
-    transition: color ease-in 0.2s;
-  }
-
-  &:hover::placeholder {
-    color: $color-transparent;
-  }
-
-  @include media-query('md') {
-    height: $height-md + 0.75rem;
-    font-size: $height-md;
-  }
-  @include media-query('lg') {
-    height: $height-lg + 1.5rem;
-    font-size: $height-lg;
-  }
-}
-
 .form_twoRows .input {
   height: ($height-xs + 0.5rem) * 2;
 
   @include media-query('md') {
-    height: ($height-md + 0.75rem) * 2;;
+    height: ($height-md + 0.75rem) * 2;
   }
   @include media-query('lg') {
-    height: ($height-lg + 1.5rem) * 2;;
+    height: ($height-lg + 1.5rem) * 2;
   }
 }
 
