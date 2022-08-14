@@ -5,7 +5,6 @@ import {
   getVisibleItemsByItems,
   useThrottledFunction,
 } from "./InfiniteScroll.helpers";
-import { InfiniteScrollContextProvider } from "./infiniteScrollStore";
 import { Item } from "./Item";
 import type { IItem, IItemSize } from "./types";
 
@@ -84,19 +83,17 @@ export const InfiniteScroll: FC<InfiniteScrollProps> = ({
   console.log("[InfiniteScroll]: Render", page);
 
   return (
-    <InfiniteScrollContextProvider>
-      <div className="items" style={{ height }}>
-        {items.map((item) => (
-          <Item
-            {...item}
-            key={item.id}
-            style={{
-              position: "absolute",
-              top: `${getItemTop(item)}px`,
-            }}
-          />
-        ))}
-      </div>
-    </InfiniteScrollContextProvider>
+    <div className="items" style={{ height }}>
+    {items.map((item) => (
+        <Item
+        {...item}
+        key={item.id}
+        style={{
+            position: "absolute",
+            top: `${getItemTop(item)}px`,
+        }}
+        />
+    ))}
+    </div>
   );
 };
