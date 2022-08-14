@@ -7,3 +7,8 @@ export interface IItem {
 export interface IItemSize {
   (item: IItem): number;
 }
+
+export interface IItemPosition {
+  top: number;
+  bottom: number;
+}

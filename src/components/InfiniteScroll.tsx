@@ -1,99 +1,106 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 
 import {
-  getPageByScroll,
-  getVisibleItemsByItems,
+  getPositionIndex,
+  getVisibleItemsByPositions,
+  useDebouncedFunction,
   useThrottledFunction,
 } from "./InfiniteScroll.helpers";
 import { Item } from "./Item";
-import type { IItem, IItemSize } from "./types";
+import type { IItem, IItemPosition, IItemSize } from "./types";
+
+const RESIZE_DEBOUNCE_MS = 100;
+const SCROLL_THROTTLE_MS = 10;
 
 type InfiniteScrollProps = {
   data: Array<IItem>;
-  threshold?: number;
+  offset?: number;
   itemHeight?: number;
   itemSize?: IItemSize;
 };
 
 export const InfiniteScroll: FC<InfiniteScrollProps> = ({
   data,
-  threshold = 3,
+  offset = 0,
   itemHeight,
   itemSize,
 }) => {
-  const { visibleItems, height } = useMemo(() => {
-    const containerHeight = document.body.offsetHeight;
-    let height = "";
-    let visibleItems = 10;
-    if (typeof itemHeight === "number") {
-      height = `${itemHeight * data.length}px`;
-      visibleItems = Math.ceil(containerHeight / itemHeight);
-    } else if (typeof itemSize === "function") {
-      height = `${data.reduce((acc, cur) => acc + itemSize(cur), 0)}px`;
-      visibleItems = getVisibleItemsByItems(containerHeight, data, itemSize);
-    }
-    return { height, visibleItems };
-  }, [data, itemHeight, itemSize]);
+  const [documentHeight, setDocumentHeight] = useState(
+    document.body.offsetHeight
+  );
+  const debouncedOnResize = useDebouncedFunction(() => {
+    setDocumentHeight(document.body.offsetHeight);
+  }, RESIZE_DEBOUNCE_MS);
 
   const positions = useMemo(() => {
-    if (typeof itemHeight === "number") {
-      return data.map<number>((_, i) => itemHeight * i);
-    } else if (typeof itemSize === "function") {
-      return [0]
-        .concat(
-          data.reduce<number[]>(
-            (acc, item) => [
-              ...acc,
-              (acc[acc.length - 1] || 0) + itemSize(item),
-            ],
-            []
-          )
-        )
-        .slice(0, data.length);
-    } else {
-      return [];
-    }
-  }, [data, itemHeight, itemSize]);
+    return data.reduce<IItemPosition[]>((acc, item) => {
+      const prev = acc[acc.length - 1];
+      let height = 0;
 
-  const [page, setPage] = useState(getPageByScroll(visibleItems));
+      if (typeof itemHeight === "number") {
+        height = itemHeight;
+      } else if (typeof itemSize === "function") {
+        height = itemSize(item);
+      }
+
+      if (!prev) {
+        return [...acc, { top: offset, bottom: offset + height }];
+      } else {
+        return [...acc, { top: prev.bottom, bottom: prev.bottom + height }];
+      }
+    }, []);
+  }, [data, offset, itemHeight, itemSize]);
+
+  const [positionIndex, setPositionIndex] = useState(
+    getPositionIndex(positions)
+  );
   const throttledOnScroll = useThrottledFunction(
-    () => setPage(() => getPageByScroll(visibleItems)),
-    10
+    () => setPositionIndex(getPositionIndex(positions)),
+    SCROLL_THROTTLE_MS
   );
 
   const items = useMemo(() => {
-    // const start = Math.max(offset - threshold, 0);
-    const start = Math.max(page * visibleItems - visibleItems, 0);
-    // const end =
-    //   start + visibleItems + threshold + Math.min(offset - start, threshold);
+    const visibleItems = getVisibleItemsByPositions(
+      documentHeight,
+      positions,
+      positionIndex
+    );
+    const start = Math.max(positionIndex - visibleItems, 0);
     const end = start + visibleItems * 2;
-    console.log(start, end, page);
     return data.slice(start, end);
-  }, [data, /* threshold,  */ visibleItems, page]);
+  }, [data, documentHeight, positions, positionIndex]);
 
   useEffect(() => {
+    window.addEventListener("resize", debouncedOnResize);
     window.addEventListener("scroll", throttledOnScroll);
+
     return () => {
+      window.removeEventListener("resize", debouncedOnResize);
       window.removeEventListener("scroll", throttledOnScroll);
     };
-  }, [throttledOnScroll]);
+  }, [debouncedOnResize, throttledOnScroll]);
 
-  const getItemTop = (item: IItem) => positions[data.indexOf(item)];
+  const getItemTop = (item: IItem) =>
+    positions[data.indexOf(item)].top - offset;
+  const height = positions[positions.length - 1].bottom;
 
-  console.log("[InfiniteScroll]: Render", page);
+  console.log("[InfiniteScroll]: Render", positionIndex);
 
   return (
-    <div className="items" style={{ height }}>
-    {items.map((item) => (
+    <div
+      className="items"
+      style={{ position: "relative", height }}
+    >
+      {items.map((item) => (
         <Item
-        {...item}
-        key={item.id}
-        style={{
+          {...item}
+          key={item.id}
+          style={{
             position: "absolute",
             top: `${getItemTop(item)}px`,
-        }}
+          }}
         />
-    ))}
+      ))}
     </div>
   );
 };

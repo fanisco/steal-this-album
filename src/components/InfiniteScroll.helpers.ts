@@ -1,16 +1,17 @@
 import { useEffect, useRef } from "react";
-import { IItem, IItemSize } from "./types";
 
-export const getVisibleItemsByItems = (
+import { IItemPosition } from "./types";
+
+export const getVisibleItemsByPositions = (
   containerHeight: number,
-  items: IItem[],
-  itemSize: IItemSize
+  positions: IItemPosition[],
+  index: number
 ) => {
   let count = 0;
   let height = containerHeight;
 
-  for (const item of items) {
-    height -= itemSize(item);
+  for (let i = index; i < positions.length; i++) {
+    height -= positions[i].bottom - positions[i].top;
     count++;
 
     if (height <= 0) {
@@ -21,24 +22,10 @@ export const getVisibleItemsByItems = (
   return count;
 };
 
-export const getPageByScroll = (visibleItems: number) => {
-  console.log(
-    document.documentElement.scrollTop,
-    document.documentElement.offsetHeight,
-    Math.floor(
-      (document.documentElement.scrollTop /
-        document.documentElement.offsetHeight) *
-        visibleItems
-    ) / visibleItems
-  );
-  return (
-    Math.floor(
-      (document.body.scrollTop
-        ? document.body.scrollTop / document.body.offsetHeight
-        : document.documentElement.scrollTop /
-          document.documentElement.offsetHeight) * visibleItems
-    ) / visibleItems
-  );
+export const getPositionIndex = (positions: IItemPosition[]) => {
+  const scrollTop =
+    document.body.scrollTop || document.documentElement.scrollTop;
+  return positions.findIndex((pos) => scrollTop <= pos.top);
 };
 
 export const useDebouncedFunction = (callee: Function, delay: number) => {

@@ -13,12 +13,13 @@ function App() {
   return (
     <div className="container">
       <div className="app">
-        <InfiniteScroll data={data} threshold={5} itemHeight={110} />
-        <div className="fakeItems">
+        <InfiniteScroll data={data} offset={20} itemHeight={110} />
+        {/* Visual comparison with first 300 items */}
+        {/* <div className="fakeItems">
           {items.map((item) => (
             <Item {...item} key={item.id} />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
